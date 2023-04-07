@@ -10,7 +10,6 @@
 		4A7E7CCD29DF2E6B0067F1FB /* ListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */; };
 		4A7E7CD129E02DD50067F1FB /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD029E02DD50067F1FB /* StringExtension.swift */; };
 		4A7E7CD329E037290067F1FB /* DecodableBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD229E037290067F1FB /* DecodableBool.swift */; };
-		4A7E7CD629E03A7B0067F1FB /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7E7CD529E03A7B0067F1FB /* SkeletonUI */; };
 		4A7E7CD929E03D930067F1FB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4A7E7CD829E03D930067F1FB /* Alamofire */; };
 		4A83E3DD29DC812C0011BC32 /* HNReaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A83E3DC29DC812C0011BC32 /* HNReaderApp.swift */; };
 		4A83E3DF29DC812C0011BC32 /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A83E3DE29DC812C0011BC32 /* StoryListView.swift */; };
@@ -43,7 +42,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A7E7CD929E03D930067F1FB /* Alamofire in Frameworks */,
-				4A7E7CD629E03A7B0067F1FB /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +147,6 @@
 			);
 			name = hnreader;
 			packageProductDependencies = (
-				4A7E7CD529E03A7B0067F1FB /* SkeletonUI */,
 				4A7E7CD829E03D930067F1FB /* Alamofire */,
 			);
 			productName = hnreader;
@@ -181,7 +178,6 @@
 			);
 			mainGroup = 4A83E3D029DC812C0011BC32;
 			packageReferences = (
-				4A7E7CD429E03A7B0067F1FB /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				4A7E7CD729E03D930067F1FB /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 4A83E3DA29DC812C0011BC32 /* Products */;
@@ -423,14 +419,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4A7E7CD429E03A7B0067F1FB /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		4A7E7CD729E03D930067F1FB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -442,11 +430,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4A7E7CD529E03A7B0067F1FB /* SkeletonUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4A7E7CD429E03A7B0067F1FB /* XCRemoteSwiftPackageReference "SkeletonUI" */;
-			productName = SkeletonUI;
-		};
 		4A7E7CD829E03D930067F1FB /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4A7E7CD729E03D930067F1FB /* XCRemoteSwiftPackageReference "Alamofire" */;

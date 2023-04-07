@@ -5,7 +5,6 @@
 //  Created by gobtronic on 04/04/2023.
 //
 
-import SkeletonUI
 import SwiftUI
 
 struct StoryListView: View {

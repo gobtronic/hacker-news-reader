@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct StoryRow: View {
-    let story: Story?
+    let story: Story
     
     var body: some View {
         HStack {
-            Text(story?.title)
+            Text(story.title)
         }
     }
 }
