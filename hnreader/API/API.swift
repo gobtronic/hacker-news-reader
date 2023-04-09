@@ -21,27 +21,31 @@ struct API {
     func fetchTopStories(limit: Int? = nil) async throws -> (stories: [Story], allStoriesIds: [Int]) {
         do {
             let storyIds: [Int] = try await AF.request(apiUrl.appending(path: "beststories.json")).serializingDecodable([Int].self).value
-            let stories = await withTaskGroup(of: Story?.self, body: { group in
-                var stories = [Story]()
-                
-                for storyId in storyIds[0...(limit ?? storyIds.count)] {
-                    group.addTask {
-                        return try? await fetchStory(storyId)
-                    }
-                }
-                for await story in group {
-                    if let story {
-                        stories.append(story)
-                    }
-                }
-                
-                return stories
-            })
+            let stories = try await fetchStories(storyIds, limit: limit)
             
             return (stories, storyIds)
         } catch let error {
             throw error
         }
+    }
+    
+    func fetchStories(_ storyIds: [Int], limit: Int? = nil) async throws -> [Story] {
+        return await withTaskGroup(of: Story?.self, body: { group in
+            var stories = [Story]()
+            
+            for storyId in storyIds[0...(limit ?? storyIds.count - 1)] {
+                group.addTask {
+                    return try? await fetchStory(storyId)
+                }
+            }
+            for await story in group {
+                if let story {
+                    stories.append(story)
+                }
+            }
+            
+            return stories
+        })
     }
     
     private func fetchStory(_ storyId: Int) async throws -> Story {

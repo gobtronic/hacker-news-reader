@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct StoryListView: View {
-    @ObservedObject var viewModel = StoryViewModel()
-    @State var animateList = false
+    @ObservedObject var viewModel = StoryViewModel(storiesPerPage: 30)
     
     var body: some View {
         NavigationView {
             List(viewModel.stories) { story in
                 StoryRow(story: story)
-                    .redacted(reason: story.isMocked ? .placeholder : [])
+                .redacted(reason: story.isMocked ? .placeholder : [])
+                .onAppear {
+                    Task {
+                        await viewModel.loadNextPageIfNeeded(from: story)
+                    }
+                }
             }
-            .animation(.default, value: animateList)
+            .listStyle(.grouped)
             .refreshable {
                 Task {
-                    animateList = true
-                    await viewModel.fetch(limit: 30)
-                    animateList = false
+                    await viewModel.fetch()
                 }
             }
             .navigationTitle("Top stories")
@@ -36,9 +38,7 @@ struct StoryListView: View {
         }
         .onAppear {
             Task {
-                animateList = true
-                await viewModel.fetch(limit: 30)
-                animateList = false
+                await viewModel.fetch()
             }
         }
     }
