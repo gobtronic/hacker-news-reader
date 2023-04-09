@@ -26,6 +26,13 @@ struct StoryListView: View {
                 }
             }
             .navigationTitle("Top stories")
+            .toolbar {
+                Button(action: {
+                    // TODO: Implement different stories filtering
+                }, label: {
+                    return Image(systemName: "medal.fill")
+                })
+            }
         }
         .onAppear {
             Task {

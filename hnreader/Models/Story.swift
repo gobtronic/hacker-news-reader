@@ -31,7 +31,7 @@ extension Story {
                      by: String.random(),
                      title: String.random(length: .long),
                      type: .story,
-                     url: nil,
+                     url: URL(string: "https://developer.apple.com/documentation/linkpresentation"),
                      score: 0,
                      time: 0,
                      kids: [],

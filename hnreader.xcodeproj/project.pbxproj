@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A50DB3529E297EB00D6C4FF /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50DB3429E297EB00D6C4FF /* LinkView.swift */; };
+		4A50DB3729E2BB6900D6C4FF /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50DB3629E2BB6900D6C4FF /* URLExtension.swift */; };
 		4A7E7CCD29DF2E6B0067F1FB /* ListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */; };
 		4A7E7CD129E02DD50067F1FB /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD029E02DD50067F1FB /* StringExtension.swift */; };
 		4A7E7CD329E037290067F1FB /* DecodableBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD229E037290067F1FB /* DecodableBool.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A50DB3429E297EB00D6C4FF /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
+		4A50DB3629E2BB6900D6C4FF /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExtension.swift; sourceTree = "<group>"; };
 		4A7E7CD029E02DD50067F1FB /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		4A7E7CD229E037290067F1FB /* DecodableBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableBool.swift; sourceTree = "<group>"; };
@@ -48,6 +52,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A50DB2829E28CBB00D6C4FF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4A50DB2929E28CC700D6C4FF /* Views */,
+				4A7E7CCF29E02DBC0067F1FB /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4A50DB2929E28CC700D6C4FF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A50DB3429E297EB00D6C4FF /* LinkView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		4A7E7CCB29DF28400067F1FB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				4A7E7CD029E02DD50067F1FB /* StringExtension.swift */,
+				4A50DB3629E2BB6900D6C4FF /* URLExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -86,9 +108,9 @@
 			children = (
 				4A83E3DC29DC812C0011BC32 /* HNReaderApp.swift */,
 				4A8A47C829DC8BAF008126A6 /* API */,
+				4A50DB2829E28CBB00D6C4FF /* Common */,
 				4A7E7CCB29DF28400067F1FB /* Models */,
-				4AB6B3AF29DF1A36008D4F98 /* Stories */,
-				4A7E7CCF29E02DBC0067F1FB /* Extensions */,
+				4AB6B3AF29DF1A36008D4F98 /* Story */,
 				4A83E3E029DC812D0011BC32 /* Assets.xcassets */,
 				4A83E3E229DC812D0011BC32 /* Preview Content */,
 				4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */,
@@ -120,14 +142,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		4AB6B3AF29DF1A36008D4F98 /* Stories */ = {
+		4AB6B3AF29DF1A36008D4F98 /* Story */ = {
 			isa = PBXGroup;
 			children = (
 				4AB6B3B029DF1A52008D4F98 /* StoryViewModel.swift */,
 				4A83E3DE29DC812C0011BC32 /* StoryListView.swift */,
 				4AB6B3B229DF1B92008D4F98 /* StoryRow.swift */,
 			);
-			path = Stories;
+			path = Story;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,9 +228,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A50DB3729E2BB6900D6C4FF /* URLExtension.swift in Sources */,
 				4AB6B3B129DF1A52008D4F98 /* StoryViewModel.swift in Sources */,
 				4A83E3DF29DC812C0011BC32 /* StoryListView.swift in Sources */,
 				4A8A47CA29DC8BCB008126A6 /* API.swift in Sources */,
+				4A50DB3529E297EB00D6C4FF /* LinkView.swift in Sources */,
 				4A7E7CD329E037290067F1FB /* DecodableBool.swift in Sources */,
 				4A83E3DD29DC812C0011BC32 /* HNReaderApp.swift in Sources */,
 				4A7E7CD129E02DD50067F1FB /* StringExtension.swift in Sources */,
