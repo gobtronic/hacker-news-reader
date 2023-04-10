@@ -43,6 +43,14 @@ struct API {
                     stories.append(story)
                 }
             }
+            stories.sort { a, b in
+                guard let aIndex = storyIds.firstIndex(of: a.id),
+                      let bIndex = storyIds.firstIndex(of: b.id) else {
+                    return false
+                }
+                
+                return aIndex < bIndex
+            }
             
             return stories
         })
