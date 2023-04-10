@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A50DB3529E297EB00D6C4FF /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50DB3429E297EB00D6C4FF /* LinkView.swift */; };
 		4A50DB3729E2BB6900D6C4FF /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50DB3629E2BB6900D6C4FF /* URLExtension.swift */; };
+		4A50DB3B29E2EAD300D6C4FF /* StoryUrlMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50DB3A29E2EAD300D6C4FF /* StoryUrlMetadata.swift */; };
 		4A7E7CCD29DF2E6B0067F1FB /* ListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */; };
 		4A7E7CD129E02DD50067F1FB /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD029E02DD50067F1FB /* StringExtension.swift */; };
 		4A7E7CD329E037290067F1FB /* DecodableBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7E7CD229E037290067F1FB /* DecodableBool.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		4A50DB3429E297EB00D6C4FF /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		4A50DB3629E2BB6900D6C4FF /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
+		4A50DB3A29E2EAD300D6C4FF /* StoryUrlMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUrlMetadata.swift; sourceTree = "<group>"; };
 		4A7E7CCC29DF2E6B0067F1FB /* ListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExtension.swift; sourceTree = "<group>"; };
 		4A7E7CD029E02DD50067F1FB /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		4A7E7CD229E037290067F1FB /* DecodableBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableBool.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				4A8A47CB29DC8FE6008126A6 /* Story.swift */,
+				4A50DB3A29E2EAD300D6C4FF /* StoryUrlMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				4A7E7CD329E037290067F1FB /* DecodableBool.swift in Sources */,
 				4A83E3DD29DC812C0011BC32 /* HNReaderApp.swift in Sources */,
 				4A7E7CD129E02DD50067F1FB /* StringExtension.swift in Sources */,
+				4A50DB3B29E2EAD300D6C4FF /* StoryUrlMetadata.swift in Sources */,
 				4AB6B3B329DF1B92008D4F98 /* StoryRow.swift in Sources */,
 				4A8A47CC29DC8FE6008126A6 /* Story.swift in Sources */,
 				4A7E7CCD29DF2E6B0067F1FB /* ListExtension.swift in Sources */,

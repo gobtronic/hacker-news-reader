@@ -6,24 +6,26 @@
 //
 
 import Foundation
+import UIKit
 
 struct Story: Identifiable, Codable {
-    public enum SType: String {
-        case story
-    }
-
     var id: Int
     var by: String
     let title: String
-    let type: SType
+    let type: Kind
     let url: URL?
     let score: Int
     let time: Double
     let kids: [Int]
+    
     @DecodableBool var isMocked: Bool = false
 }
 
-extension Story.SType: Codable {}
+extension Story {
+    public enum Kind: String, Codable {
+        case story
+    }
+}
 
 extension Story {
     static func mocked() -> Story {

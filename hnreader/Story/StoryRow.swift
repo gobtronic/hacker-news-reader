@@ -11,13 +11,21 @@ import SwiftUI
 
 struct StoryRow: View {
     let story: Story
+    @State var metadata: Story.UrlMetadata?
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(story.title)
-            if let url = story.url, !story.isMocked {
-                LinkView(url: url)
+            if !story.isMocked, let metadata  {
+                LinkView(metadata: metadata)
             }
+        }
+        .task {
+            guard !story.isMocked else {
+                return
+            }
+            
+            metadata = await Story.UrlMetadata.of(story: story)
         }
     }
 }
