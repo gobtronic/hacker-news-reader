@@ -15,16 +15,18 @@ struct LinkView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let thumbnail = metadata.thumbnail {
-                Image(uiImage: thumbnail)
+            if let thumbnailFile = metadata.thumbnailFile,
+               let thumbnailImage = UIImage(contentsOfFile: thumbnailFile.path()) {
+                Image(uiImage: thumbnailImage)
                     .resizable()
                     .scaledToFill()
                     .frame(maxWidth: .infinity, maxHeight: 140)
                     .clipped()
             }
             HStack {
-                if let icon = metadata.icon {
-                    Image(uiImage: icon)
+                if let iconFile = metadata.iconFile,
+                   let iconImage = UIImage(contentsOfFile: iconFile.path()) {
+                    Image(uiImage: iconImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)

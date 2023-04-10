@@ -51,6 +51,7 @@ struct API {
     private func fetchStory(_ storyId: Int) async throws -> Story {
         do {
             let story = try await AF.request(apiUrl.appending(path: "item/\(storyId).json")).serializingDecodable(Story.self).value
+            let _ = await Story.UrlMetadata.of(story: story)
             return story
         } catch let error {
             throw error

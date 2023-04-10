@@ -8,6 +8,7 @@
 import Foundation
 import LinkPresentation
 import UIKit
+import UniformTypeIdentifiers
 
 extension Story {
     class UrlMetadata {
@@ -15,8 +16,8 @@ extension Story {
         
         let storyId: Int
         let url: URL
-        var thumbnail: UIImage?
-        var icon: UIImage?
+        var thumbnailFile: URL?
+        var iconFile: URL?
         var isLoaded = false
         
         // MARK: - Init
@@ -30,25 +31,43 @@ extension Story {
             self.url = storyUrl
         }
         
-        private init(storyId: Int, url: URL, thumbnail: UIImage?, icon: UIImage?) {
+        private init(storyId: Int, url: URL, thumbnailFile: URL?, iconFile: URL?) {
             self.storyId = storyId
             self.url = url
-            self.thumbnail = thumbnail
-            self.icon = icon
+            self.thumbnailFile = thumbnailFile
+            self.iconFile = iconFile
         }
         
         // MARK: - Fetching
         
         private func fetchThumbnail(withMetadata metadata: LPLinkMetadata) async {
-            let _ = metadata.imageProvider?.loadObject(ofClass: UIImage.self, completionHandler: { image, error in
-                self.thumbnail = image as? UIImage
+            let _ = metadata.imageProvider?.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, _ in
+                guard let url else {
+                    return
+                }
+                
+                let targetUrl = FileManager.default.temporaryDirectory.appendingPathComponent("\(self.storyId)_thumbnail.png", conformingTo: UTType.image)
+                do {
+                    try FileManager.default.copyItem(at: url, to: targetUrl)
+                    self.thumbnailFile = targetUrl
+                } catch {}
+
                 return
             })
         }
         
         private func fetchIcon(withMetadata metadata: LPLinkMetadata) async {
-            let _ = metadata.iconProvider?.loadObject(ofClass: UIImage.self, completionHandler: { image, error in
-                self.icon = image as? UIImage
+            let _ = metadata.iconProvider?.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, _ in
+                guard let url else {
+                    return
+                }
+                
+                let targetUrl = FileManager.default.temporaryDirectory.appendingPathComponent("\(self.storyId)_icon.png", conformingTo: UTType.image)
+                do {
+                    try FileManager.default.copyItem(at: url, to: targetUrl)
+                    self.iconFile = targetUrl
+                } catch {}
+
                 return
             })
         }
@@ -60,10 +79,9 @@ extension Story {
                 return cachedUrlMetadata
             }
             
-            guard var metadata = UrlMetadata(with: story) else {
+            guard let metadata = UrlMetadata(with: story) else {
                 return nil
             }
-            
             if metadata.isLoaded {
                 return metadata
             }
@@ -87,6 +105,9 @@ extension Story {
 
 extension Story.UrlMetadata {
     static func mocked() -> Story.UrlMetadata {
-        return Story.UrlMetadata(storyId: 0, url: URL(string: "https://github.com/gobtronic/hacker-news-reader")!, thumbnail: nil, icon: nil)
+        return Story.UrlMetadata(storyId: 0,
+                                 url: URL(string: "https://github.com/gobtronic/hacker-news-reader")!,
+                                 thumbnailFile: nil,
+                                 iconFile: nil)
     }
 }
