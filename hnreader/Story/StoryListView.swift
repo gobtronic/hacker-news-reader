@@ -20,6 +20,12 @@ struct StoryListView: View {
                         await viewModel.loadNextPageIfNeeded(from: story)
                     }
                 }
+                if viewModel.isLoadingNextPage && viewModel.isLastStoryCurrentlyAvailable(story) {
+                    LoadingRow()
+                        .listRowSeparator(.hidden)
+                    StoryRow(story: Story.mocked())
+                        .redacted(reason: .placeholder)
+                }
             }
             .listStyle(.grouped)
             .refreshable {

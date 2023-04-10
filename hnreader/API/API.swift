@@ -33,7 +33,7 @@ struct API {
         return await withTaskGroup(of: Story?.self, body: { group in
             var stories = [Story]()
             
-            for storyId in storyIds[0...(limit ?? storyIds.count - 1)] {
+            for storyId in storyIds[0..<(limit ?? storyIds.count)] {
                 group.addTask {
                     return try? await fetchStory(storyId)
                 }

@@ -47,6 +47,10 @@ extension Story {
                 }
                 
                 let targetUrl = FileManager.default.temporaryDirectory.appendingPathComponent("\(self.storyId)_thumbnail.png", conformingTo: UTType.image)
+                guard !FileManager.default.fileExists(atPath: targetUrl.path()) else {
+                    self.thumbnailFile = targetUrl
+                    return
+                }
                 do {
                     try FileManager.default.copyItem(at: url, to: targetUrl)
                     self.thumbnailFile = targetUrl
@@ -63,6 +67,10 @@ extension Story {
                 }
                 
                 let targetUrl = FileManager.default.temporaryDirectory.appendingPathComponent("\(self.storyId)_icon.png", conformingTo: UTType.image)
+                guard !FileManager.default.fileExists(atPath: targetUrl.path()) else {
+                    self.iconFile = targetUrl
+                    return
+                }
                 do {
                     try FileManager.default.copyItem(at: url, to: targetUrl)
                     self.iconFile = targetUrl

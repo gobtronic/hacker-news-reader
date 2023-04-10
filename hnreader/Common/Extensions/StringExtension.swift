@@ -20,11 +20,11 @@ extension String {
         let nbChars: Int
         switch length {
         case .short:
-            nbChars = Int.random(in: 4..<10)
+            nbChars = Int.random(in: 8..<16)
         case .regular:
-            nbChars = Int.random(in: 12..<20)
+            nbChars = Int.random(in: 25..<40)
         case .long:
-            nbChars = Int.random(in: 30..<50)
+            nbChars = Int.random(in: 80..<120)
         case .extraLong:
             nbChars = Int.random(in: 150..<220)
         }

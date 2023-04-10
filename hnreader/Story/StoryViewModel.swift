@@ -9,10 +9,11 @@ import Foundation
 
 class StoryViewModel: ObservableObject {
     @Published var stories = [Story]()
-    let storiesPerPage: Int
+    @Published private(set) var isLoadingNextPage = false
+
+    private let storiesPerPage: Int
     private var currentPage = 1
     private var storyIds = [Int]()
-    private var isLoadingNextPage = false
     
     // MARK: - Init
     
@@ -62,5 +63,13 @@ class StoryViewModel: ObservableObject {
         } catch {
             isLoadingNextPage = false
         }
+    }
+    
+    func isLastStoryCurrentlyAvailable(_ story: Story) -> Bool {
+        guard let storyIndex = stories.firstIndex(where: { story.id == $0.id }) else {
+            return false
+        }
+        
+        return storyIndex == currentPage * storiesPerPage - 1
     }
 }
