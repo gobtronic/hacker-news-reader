@@ -24,11 +24,11 @@ class StoryViewModel: ObservableObject {
     // MARK: - API
     
     @MainActor
-    func fetch() async {
+    func fetch(ordering: StoriesOrdering) async {
         currentPage = 1
         stories = Story.mockedList(nbItems: 10)
         do {
-            (stories, storyIds) = try await API.shared.fetchTopStories(limit: storiesPerPage)
+            (stories, storyIds) = try await API.shared.fetchStories(ordering: ordering, limit: storiesPerPage)
         } catch {}
     }
     

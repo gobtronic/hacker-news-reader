@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StoryListView: View {
     @ObservedObject var viewModel = StoryViewModel(storiesPerPage: 30)
+    @State var storiesOrdering = StoriesOrdering.top
     
     var body: some View {
         NavigationView {
@@ -30,21 +31,37 @@ struct StoryListView: View {
             .listStyle(.grouped)
             .refreshable {
                 Task {
-                    await viewModel.fetch()
+                    await viewModel.fetch(ordering: storiesOrdering)
                 }
             }
-            .navigationTitle("Top stories")
+            .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
             .toolbar {
-                Button(action: {
-                    // TODO: Implement different stories filtering
-                }, label: {
-                    return Image(systemName: "medal.fill")
-                })
+                ToolbarItem {
+                    Menu(content: {
+                        ForEach(0..<StoriesOrdering.allCases.count) { index in
+                            Button(role: StoriesOrdering.allCases[index] == storiesOrdering ? .destructive : .none, action: {
+                                storiesOrdering = StoriesOrdering.allCases[index]
+                                Task {
+                                    await viewModel.fetch(ordering: storiesOrdering)
+                                }
+                            }, label: {
+                                HStack(alignment: .center) {
+                                    Text(StoriesOrdering.allCases[index].rawValue.capitalized)
+                                    Image(uiImage: StoriesOrdering.allCases[index].icon)
+                                }
+                            })
+                        }
+                        .foregroundColor(.red)
+                    }, label: {
+                        Image(uiImage: storiesOrdering.icon)
+                    })
+                }
+                
             }
         }
         .onAppear {
             Task {
-                await viewModel.fetch()
+                await viewModel.fetch(ordering: storiesOrdering)
             }
         }
     }

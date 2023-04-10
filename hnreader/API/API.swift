@@ -18,9 +18,9 @@ struct API {
     
     // MARK: - Calls
     
-    func fetchTopStories(limit: Int? = nil) async throws -> (stories: [Story], allStoriesIds: [Int]) {
+    func fetchStories(ordering: StoriesOrdering, limit: Int? = nil) async throws -> (stories: [Story], allStoriesIds: [Int]) {
         do {
-            let storyIds: [Int] = try await AF.request(apiUrl.appending(path: "beststories.json")).serializingDecodable([Int].self).value
+            let storyIds: [Int] = try await AF.request(apiUrl.appending(path: ordering.apiPath)).serializingDecodable([Int].self).value
             let stories = try await fetchStories(storyIds, limit: limit)
             
             return (stories, storyIds)
