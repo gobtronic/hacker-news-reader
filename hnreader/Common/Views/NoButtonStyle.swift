@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EmptyButtonStyle: ButtonStyle {
+struct NoButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
     }

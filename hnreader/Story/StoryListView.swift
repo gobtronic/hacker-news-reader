@@ -12,7 +12,7 @@ struct StoryListView: View {
     @State var storiesOrdering = StoriesOrdering.top
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(viewModel.stories) { story in
                 NavigationLink(destination: SafariView(url: story.url!)) {
                     StoryRow(story: story)
@@ -39,26 +39,9 @@ struct StoryListView: View {
             }
             .toolbar {
                 ToolbarItem {
-                    Menu(content: {
-                        ForEach(0..<StoriesOrdering.allCases.count) { index in
-                            Button(role: StoriesOrdering.allCases[index] == storiesOrdering ? .destructive : .none, action: {
-                                storiesOrdering = StoriesOrdering.allCases[index]
-                                Task {
-                                    await viewModel.fetch(ordering: storiesOrdering)
-                                }
-                            }, label: {
-                                HStack(alignment: .center) {
-                                    Text(StoriesOrdering.allCases[index].rawValue.capitalized)
-                                    Image(uiImage: StoriesOrdering.allCases[index].icon)
-                                }
-                            })
-                        }
-                        .foregroundColor(.red)
-                    }, label: {
-                        Image(uiImage: storiesOrdering.icon)
-                    })
+                    StoryListOrderingMenu(storiesOrdering: $storiesOrdering,
+                                           viewModel: viewModel)
                 }
-                
             }
         }
         .onAppear {
@@ -72,5 +55,31 @@ struct StoryListView: View {
 struct StoryListView_Previews: PreviewProvider {
     static var previews: some View {
         StoryListView()
+    }
+}
+
+struct StoryListOrderingMenu: View {
+    @Binding var storiesOrdering: StoriesOrdering
+    var viewModel: StoryViewModel
+    
+    var body: some View {
+        Menu {
+            ForEach(0..<StoriesOrdering.allCases.count, id: \.self) { index in
+                Button(role: StoriesOrdering.allCases[index] == storiesOrdering ? .destructive : .none, action: {
+                    storiesOrdering = StoriesOrdering.allCases[index]
+                    Task {
+                        await viewModel.fetch(ordering: storiesOrdering)
+                    }
+                }, label: {
+                    HStack(alignment: .center) {
+                        Text(StoriesOrdering.allCases[index].rawValue.capitalized)
+                        Image(uiImage: StoriesOrdering.allCases[index].icon)
+                    }
+                })
+            }
+            .foregroundColor(.red)
+        } label: {
+            Image(uiImage: storiesOrdering.icon)
+        }
     }
 }
