@@ -6,21 +6,25 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct StoryListView: View {
     @ObservedObject var viewModel = StoryViewModel(storiesPerPage: 30)
     @State var storiesOrdering = StoriesOrdering.top
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(viewModel.stories) { story in
-                StoryRow(story: story)
-                .redacted(reason: story.isMocked ? .placeholder : [])
-                .onAppear {
-                    Task {
-                        await viewModel.loadNextPageIfNeeded(from: story)
-                    }
+                NavigationLink(destination: EmptyView()) {
+                    StoryRow(story: story)
+                        .redacted(reason: story.isMocked ? .placeholder : [])
+                        .onAppear {
+                            Task {
+                                await viewModel.loadNextPageIfNeeded(from: story)
+                            }
+                        }
                 }
+                .buttonStyle(PlainButtonStyle())
                 if viewModel.isLoadingNextPage && viewModel.isLastStoryCurrentlyAvailable(story) {
                     LoadingRow()
                         .listRowSeparator(.hidden)
@@ -36,7 +40,7 @@ struct StoryListView: View {
             }
             .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .navigationBarTrailing, content: {
                     Menu(content: {
                         ForEach(0..<StoriesOrdering.allCases.count) { index in
                             Button(role: StoriesOrdering.allCases[index] == storiesOrdering ? .destructive : .none, action: {
@@ -55,8 +59,7 @@ struct StoryListView: View {
                     }, label: {
                         Image(uiImage: storiesOrdering.icon)
                     })
-                }
-                
+                })
             }
         }
         .onAppear {
