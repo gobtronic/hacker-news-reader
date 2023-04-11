@@ -19,6 +19,7 @@ struct StoryRow: View {
             if !story.isMocked, let metadata  {
                 LinkView(metadata: metadata)
             }
+            StoryAdditionalInfoView(story: story)
         }
         .task {
             guard !story.isMocked else {

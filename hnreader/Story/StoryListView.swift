@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct StoryListView: View {
-    @ObservedObject var viewModel = StoryViewModel(storiesPerPage: 30)
+    @StateObject var viewModel = StoryViewModel(storiesPerPage: 30)
     @State var storiesOrdering = StoriesOrdering.top
     
     var body: some View {
         NavigationView {
             List(viewModel.stories) { story in
-                StoryRow(story: story)
+                NavigationLink(destination: SafariView(url: story.url!)) {
+                    StoryRow(story: story)
+                }
                 .redacted(reason: story.isMocked ? .placeholder : [])
                 .onAppear {
                     Task {
@@ -28,13 +30,13 @@ struct StoryListView: View {
                         .redacted(reason: .placeholder)
                 }
             }
-            .listStyle(.grouped)
+            .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
+            .listStyle(.plain)
             .refreshable {
                 Task {
                     await viewModel.fetch(ordering: storiesOrdering)
                 }
             }
-            .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
             .toolbar {
                 ToolbarItem {
                     Menu(content: {
