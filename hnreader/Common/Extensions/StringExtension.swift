@@ -16,7 +16,7 @@ extension String {
     }
     
     static func random(length: Length = .regular) -> String {
-        let chars = "0123456789"
+        let chars = "abcdefghijklmnop "
         let nbChars: Int
         switch length {
         case .short:

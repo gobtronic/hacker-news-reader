@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StoryListView: View {
     @StateObject var viewModel = StoryViewModel(storiesPerPage: 30)
-    @State var storiesOrdering = StoriesOrdering.top
+    @State var storyOrdering = StoryOrdering.top
     @State private var path = NavigationPath()
 
     var body: some View {
@@ -35,7 +35,7 @@ struct StoryListView: View {
                         .listRowSeparator(.hidden)
                 }
             }
-            .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
+            .navigationTitle("\(storyOrdering.rawValue.capitalized) stories")
             .navigationDestination(for: Int.self) { storyId in
                 if let storyUrl = viewModel.stories.first(where: { $0.id == storyId })?.url {
                     SafariView(url: storyUrl)
@@ -44,12 +44,12 @@ struct StoryListView: View {
             .listStyle(.plain)
             .refreshable {
                 Task {
-                    await viewModel.fetch(ordering: storiesOrdering)
+                    await viewModel.fetch(ordering: storyOrdering)
                 }
             }
             .toolbar {
                 ToolbarItem {
-                    StoryListOrderingMenu(storiesOrdering: $storiesOrdering,
+                    StoryListOrderingMenu(storyOrdering: $storyOrdering,
                                            viewModel: viewModel)
                 }
             }
@@ -57,7 +57,7 @@ struct StoryListView: View {
         }
         .onAppear {
             Task {
-                await viewModel.fetch(ordering: storiesOrdering)
+                await viewModel.fetch(ordering: storyOrdering)
             }
         }
     }

@@ -24,7 +24,7 @@ class StoryViewModel: ObservableObject {
     // MARK: - API
     
     @MainActor
-    func fetch(ordering: StoriesOrdering) async {
+    func fetch(ordering: StoryOrdering) async {
         currentPage = 1
         stories = Story.mockedList(nbItems: 10)
         do {

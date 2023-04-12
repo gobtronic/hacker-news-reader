@@ -1,5 +1,5 @@
 //
-//  StoriesOrdering.swift
+//  StoryOrdering.swift
 //  hnreader
 //
 //  Created by gobtronic on 10/04/2023.
@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-enum StoriesOrdering: String, CaseIterable {
+enum StoryOrdering: String, CaseIterable {
     case top
     case best
     case new
 }
 
-extension StoriesOrdering {
+extension StoryOrdering {
     var apiPath: String {
         switch self {
         case .top:
