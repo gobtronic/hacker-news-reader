@@ -18,6 +18,12 @@ struct SafariView: View {
     }
 }
 
+struct SafariView_Previews: PreviewProvider {
+    static var previews: some View {
+        SafariView(url: URL(string: "https://apple.com")!)
+    }
+}
+
 fileprivate struct SafariViewRepresentable: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     var url: URL
@@ -28,7 +34,9 @@ fileprivate struct SafariViewRepresentable: UIViewControllerRepresentable {
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariViewRepresentable>) {}
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariViewRepresentable>) {
+        uiViewController.view.translatesAutoresizingMaskIntoConstraints = false
+    }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)

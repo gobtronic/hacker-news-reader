@@ -11,28 +11,30 @@ import SwiftUI
 
 struct StoryRow: View {
     let story: Story
-    @State var metadata: Story.UrlMetadata?
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(story.title)
-            if !story.isMocked, let metadata  {
+            HStack {
+                Text(story.title)
+                if story.type == .job {
+                    Spacer()
+                    Image(systemName: "case.fill")
+                        .padding(8)
+                        .foregroundColor(.accentColor)
+                        .background(Color.foreground)
+                        .containerShape(Circle())
+                }
+            }
+            if !story.isMocked, let metadata = story.cachedUrlMetadata() {
                 LinkView(metadata: metadata)
             }
             StoryAdditionalInfoView(story: story)
-        }
-        .task {
-            guard !story.isMocked else {
-                return
-            }
-            
-            metadata = await Story.UrlMetadata.of(story: story)
         }
     }
 }
 
 struct StoryRow_Previews: PreviewProvider {
     static var previews: some View {
-        StoryRow(story: Story.mocked())
+        StoryRow(story: Story.mocked(type: .job))
     }
 }

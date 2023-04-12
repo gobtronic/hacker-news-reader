@@ -31,9 +31,8 @@ struct StoryListView: View {
                 
                 if viewModel.isLoadingNextPage && viewModel.isLastStoryCurrentlyAvailable(story) {
                     LoadingRow()
+                        .listRowBackground(Color.background)
                         .listRowSeparator(.hidden)
-                    StoryRow(story: Story.mocked())
-                        .redacted(reason: .placeholder)
                 }
             }
             .navigationTitle("\(storiesOrdering.rawValue.capitalized) stories")
@@ -67,31 +66,5 @@ struct StoryListView: View {
 struct StoryListView_Previews: PreviewProvider {
     static var previews: some View {
         StoryListView()
-    }
-}
-
-struct StoryListOrderingMenu: View {
-    @Binding var storiesOrdering: StoriesOrdering
-    var viewModel: StoryViewModel
-    
-    var body: some View {
-        Menu {
-            ForEach(0..<StoriesOrdering.allCases.count, id: \.self) { index in
-                Button(role: StoriesOrdering.allCases[index] == storiesOrdering ? .destructive : .none) {
-                    storiesOrdering = StoriesOrdering.allCases[index]
-                    Task {
-                        await viewModel.fetch(ordering: storiesOrdering)
-                    }
-                } label: {
-                    HStack(alignment: .center) {
-                        Text(StoriesOrdering.allCases[index].rawValue.capitalized)
-                        Image(uiImage: StoriesOrdering.allCases[index].icon)
-                    }
-                }
-            }
-            .foregroundColor(.red)
-        } label: {
-            Image(uiImage: storiesOrdering.icon)
-        }
     }
 }

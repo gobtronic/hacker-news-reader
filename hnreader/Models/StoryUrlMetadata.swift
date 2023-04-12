@@ -82,16 +82,13 @@ extension Story {
         
         // MARK: - Helper
         
-        static func of(story: Story) async -> UrlMetadata? {
+        static func generateFor(story: Story) async -> UrlMetadata? {
             if let cachedUrlMetadata = UrlMetadata.cached.first(where: { $0.storyId == story.id }) {
                 return cachedUrlMetadata
             }
             
             guard let metadata = UrlMetadata(with: story) else {
                 return nil
-            }
-            if metadata.isLoaded {
-                return metadata
             }
             
             let metadataProvider = LPMetadataProvider()
