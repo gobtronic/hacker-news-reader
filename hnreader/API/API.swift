@@ -12,12 +12,14 @@ struct API {
     static let shared = API()
     private let apiUrl = URL(string: "https://hacker-news.firebaseio.com/v0")!
     
-    // MARK: - Init
+    // MARK:  Init
     
     private init() {}
-    
-    // MARK: - Calls
-    
+}
+
+// MARK: - Stories
+
+extension API {
     func fetchStories(ordering: StoryOrdering, limit: Int? = nil) async throws -> (stories: [Story], allStoriesIds: [Int]) {
         do {
             let storyIds: [Int] = try await AF.request(apiUrl.appending(path: ordering.apiPath)).serializingDecodable([Int].self).value
@@ -65,5 +67,48 @@ struct API {
             throw error
         }
     }
+}
+
+// MARK: - Comments
+
+extension API {
+    func fetchCommentsFor(_ story: Story) async -> [Comment] {
+        guard let kids = story.kids,
+              !kids.isEmpty else {
+            return []
+        }
+        
+        return await withTaskGroup(of: Comment?.self, body: { group in
+            var comments = [Comment]()
+            
+            for commentId in kids {
+                group.addTask {
+                    return try? await fetchComment(commentId)
+                }
+            }
+            for await comment in group {
+                if let comment {
+                    comments.append(comment)
+                }
+            }
+            comments.sort { a, b in
+                guard let aIndex = kids.firstIndex(of: a.id),
+                      let bIndex = kids.firstIndex(of: b.id) else {
+                    return false
+                }
+                
+                return aIndex < bIndex
+            }
+            
+            return comments
+        })
+    }
     
+    private func fetchComment(_ commentId: Int) async throws -> Comment {
+        do {
+            return try await AF.request(apiUrl.appending(path: "item/\(commentId).json")).serializingDecodable(Comment.self).value
+        } catch let error {
+            throw error
+        }
+    }
 }

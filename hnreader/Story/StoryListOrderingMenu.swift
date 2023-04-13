@@ -29,7 +29,6 @@ struct StoryListOrderingMenu: View {
                     }
                 }
             }
-            .foregroundColor(.red)
         } label: {
             Image(uiImage: storyOrdering.icon)
         }

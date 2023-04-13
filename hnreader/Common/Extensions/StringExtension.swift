@@ -6,6 +6,28 @@
 //
 
 import Foundation
+import SwiftUI
+
+extension String {
+    var asHtmlAttributedString: AttributedString {
+        var attributedString: AttributedString
+        if let stringData = self.data(using: .utf8),
+           let nsAttributedString = try? NSAttributedString(data: stringData,
+                                                            options: [.documentType: NSAttributedString.DocumentType.html],
+                                                            documentAttributes: nil) {
+            attributedString = AttributedString(nsAttributedString)
+        } else {
+            attributedString = AttributedString(NSAttributedString(string: self))
+        }
+        
+        var container = AttributeContainer()
+        container[AttributeScopes.SwiftUIAttributes.ForegroundColorAttribute.self] = .primary
+        container[AttributeScopes.SwiftUIAttributes.FontAttribute.self] = Font.system(.body)
+        attributedString.mergeAttributes(container, mergePolicy: .keepNew)
+        
+        return attributedString
+    }
+}
 
 extension String {
     enum Length {

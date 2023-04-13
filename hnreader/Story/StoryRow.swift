@@ -10,6 +10,7 @@ import LinkPresentation
 import SwiftUI
 
 struct StoryRow: View {
+    @EnvironmentObject var viewModel: StoryViewModel
     let story: Story
     
     var body: some View {
@@ -29,12 +30,15 @@ struct StoryRow: View {
                 LinkView(metadata: metadata)
             }
             StoryAdditionalInfoView(story: story)
+                .padding([.top], 5)
+                .environmentObject(viewModel)
         }
     }
 }
 
 struct StoryRow_Previews: PreviewProvider {
     static var previews: some View {
-        StoryRow(story: Story.mocked(type: .job))
+        StoryRow(story: Story.realMocked())
+            .padding(20)
     }
 }

@@ -8,20 +8,27 @@
 import SwiftUI
 
 struct StoryAdditionalInfoView: View {
+    @EnvironmentObject var viewModel: StoryViewModel
     var story: Story
-    
+
     var body: some View {
         HStack {
             Text("\(story.score) points by \(story.by)")
                 .foregroundColor(Color.gray)
-                .font(Font.system(.footnote))
                 .lineLimit(1)
+            Spacer()
+            Button("\(story.descendants) comments") {
+                viewModel.navigationPath.append(Router.Path.storyComments(story.id))
+            }
+            .buttonStyle(BorderedButtonStyle())
         }
+        .font(Font.system(.footnote).bold())
     }
 }
 
 struct StoryAdditionalInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryAdditionalInfoView(story: Story.mocked())
+        StoryAdditionalInfoView(story: Story.realMocked())
+            .padding(20)
     }
 }

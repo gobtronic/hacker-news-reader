@@ -10,15 +10,15 @@ import SwiftUI
 struct StoryListView: View {
     @StateObject var viewModel = StoryViewModel(storiesPerPage: 30)
     @State var storyOrdering = StoryOrdering.top
-    @State private var path = NavigationPath()
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $viewModel.navigationPath) {
             List(viewModel.stories) { story in
                 Button {
-                    path.append(story.id)
+                    viewModel.navigationPath.append(Router.Path.story(story.id))
                 } label: {
                     StoryRow(story: story)
+                        .environmentObject(viewModel)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .redacted(reason: story.isMocked ? .placeholder : [])
@@ -36,10 +36,18 @@ struct StoryListView: View {
                 }
             }
             .navigationTitle("\(storyOrdering.rawValue.capitalized) stories")
-            .navigationDestination(for: Int.self) { storyId in
-                if let storyUrl = viewModel.stories.first(where: { $0.id == storyId })?.url {
-                    SafariView(url: storyUrl)
+            .navigationDestination(for: Router.Path.self) { path in
+                switch path {
+                case .story(let id):
+                    if let storyUrl = viewModel.stories.first(where: { $0.id == id })?.url {
+                        SafariView(url: storyUrl)
+                    }
+                case .storyComments(let id):
+                    if let story = viewModel.stories.first(where: { $0.id == id }) {
+                        CommentListView(story: story)
+                    }
                 }
+                
             }
             .listStyle(.plain)
             .refreshable {

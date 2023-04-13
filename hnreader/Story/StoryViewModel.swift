@@ -5,11 +5,12 @@
 //  Created by gobtronic on 06/04/2023.
 //
 
-import Foundation
+import SwiftUI
 
 class StoryViewModel: ObservableObject {
     @Published var stories = [Story]()
     @Published private(set) var isLoadingNextPage = false
+    @Published var navigationPath = NavigationPath()
 
     private let storiesPerPage: Int
     private var currentPage = 1
