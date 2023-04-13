@@ -29,6 +29,8 @@ struct CommentListView: View {
 
 struct CommentListView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentListView(story: Story.realMocked())
+        NavigationStack {
+            CommentListView(story: Story.realMocked())
+        }
     }
 }

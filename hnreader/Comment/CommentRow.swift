@@ -19,7 +19,7 @@ struct CommentRow: View {
             }
             .foregroundColor(Color.gray)
             .font(.system(.footnote))
-            Text(comment.text.asHtmlAttributedString)
+            AttributedText(string: comment.text)
                 .padding(.top, 3)
         }
     }
