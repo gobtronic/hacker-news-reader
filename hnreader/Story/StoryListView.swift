@@ -45,6 +45,7 @@ struct StoryListView: View {
                 case .storyComments(let id):
                     if let story = viewModel.stories.first(where: { $0.id == id }) {
                         CommentListView(story: story)
+                            .environmentObject(viewModel)
                     }
                 }
                 

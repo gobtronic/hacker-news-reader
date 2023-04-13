@@ -10,6 +10,7 @@ import SwiftUI
 struct StoryAdditionalInfoView: View {
     @EnvironmentObject var viewModel: StoryViewModel
     var story: Story
+    let commentsButtonEnabled: Bool
 
     var body: some View {
         HStack {
@@ -20,6 +21,7 @@ struct StoryAdditionalInfoView: View {
             Button("\(story.descendants) comments") {
                 viewModel.navigationPath.append(.storyComments(story.id))
             }
+            .disabled(!commentsButtonEnabled)
             .buttonStyle(BorderedButtonStyle())
         }
         .font(Font.system(.footnote).bold())
@@ -28,7 +30,8 @@ struct StoryAdditionalInfoView: View {
 
 struct StoryAdditionalInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryAdditionalInfoView(story: Story.realMocked())
+        StoryAdditionalInfoView(story: Story.realMocked(),
+                                commentsButtonEnabled: true)
             .padding(20)
     }
 }

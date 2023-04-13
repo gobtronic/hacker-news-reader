@@ -12,6 +12,7 @@ import SwiftUI
 struct StoryRow: View {
     @EnvironmentObject var viewModel: StoryViewModel
     let story: Story
+    var commentsButtonEnabled: Bool = true
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,7 +30,7 @@ struct StoryRow: View {
             if !story.isMocked, let metadata = story.cachedUrlMetadata() {
                 LinkView(metadata: metadata)
             }
-            StoryAdditionalInfoView(story: story)
+            StoryAdditionalInfoView(story: story, commentsButtonEnabled: commentsButtonEnabled)
                 .padding([.top], 5)
                 .environmentObject(viewModel)
         }
