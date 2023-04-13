@@ -18,7 +18,7 @@ struct StoryAdditionalInfoView: View {
                 .lineLimit(1)
             Spacer()
             Button("\(story.descendants) comments") {
-                viewModel.navigationPath.append(Router.Path.storyComments(story.id))
+                viewModel.navigationPath.append(.storyComments(story.id))
             }
             .buttonStyle(BorderedButtonStyle())
         }

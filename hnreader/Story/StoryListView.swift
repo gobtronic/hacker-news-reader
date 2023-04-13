@@ -15,7 +15,7 @@ struct StoryListView: View {
         NavigationStack(path: $viewModel.navigationPath) {
             List(viewModel.stories) { story in
                 Button {
-                    viewModel.navigationPath.append(Router.Path.story(story.id))
+                    viewModel.navigationPath.append(.story(story.id))
                 } label: {
                     StoryRow(story: story)
                         .environmentObject(viewModel)
@@ -36,7 +36,7 @@ struct StoryListView: View {
                 }
             }
             .navigationTitle("\(storyOrdering.rawValue.capitalized) stories")
-            .navigationDestination(for: Router.Path.self) { path in
+            .navigationDestination(for: StoryViewModel.Path.self) { path in
                 switch path {
                 case .story(let id):
                     if let storyUrl = viewModel.stories.first(where: { $0.id == id })?.url {

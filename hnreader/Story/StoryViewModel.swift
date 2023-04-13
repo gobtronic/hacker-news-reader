@@ -10,7 +10,7 @@ import SwiftUI
 class StoryViewModel: ObservableObject {
     @Published var stories = [Story]()
     @Published private(set) var isLoadingNextPage = false
-    @Published var navigationPath = NavigationPath()
+    @Published var navigationPath: [StoryViewModel.Path] = []
 
     private let storiesPerPage: Int
     private var currentPage = 1
@@ -72,5 +72,12 @@ class StoryViewModel: ObservableObject {
         }
         
         return storyIndex == currentPage * storiesPerPage - 1
+    }
+}
+
+extension StoryViewModel {
+    enum Path: Hashable {
+        case story(Int)
+        case storyComments(Int)
     }
 }

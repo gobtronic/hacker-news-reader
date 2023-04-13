@@ -12,15 +12,13 @@ struct CommentListView: View {
     let story: Story
     
     var body: some View {
-        NavigationStack {
-            List(viewModel.comments) { comment in
-                CommentRow(comment: comment)
-                    .listRowBackground(Color.background)
-            }
-            .navigationTitle("Comments")
-            .listStyle(.plain)
-            .background(Color.background)
+        List(viewModel.comments) { comment in
+            CommentRow(comment: comment)
+                .listRowBackground(Color.background)
         }
+        .navigationTitle("Comments")
+        .listStyle(.plain)
+        .background(Color.background)
         .onAppear {
             Task {
                 await viewModel.fetchFor(story)
